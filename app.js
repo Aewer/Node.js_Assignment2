@@ -21,7 +21,7 @@ app.get('/weather', async (req, res) => {
         const response = await fetch(apiUrl);
         const data = await response.json();
         if (data.cod !== 200) {
-            return res.status(data.cod).json({ error: data.message });
+            return res.status(data.cod).json({error: data.message});
         }
 
         const weatherData = {

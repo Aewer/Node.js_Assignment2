@@ -41,7 +41,7 @@ function displayWeatherData(data) {
         </div>
       `;
     if (!map) {
-        map = L.map('map').setView([data.latitude, data.longitude], 10);
+        map = L.map('map').setView([data.latitude, data.longitude], 5);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         }).addTo(map);

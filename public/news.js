@@ -1,4 +1,3 @@
-const newsForm = document.getElementById('newsForm');
 const newsInfo = document.getElementById('newsInfo');
 
 async function fetchNews() {
@@ -16,16 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function displayNewsData(data) {
-    /*newsInfo.innerHTML = data.map(article => `
-        <div class="card mb-3">
-            <img src="${article.imageUrl}" class="card-img-top" alt="${article.title}">
-            <div class="card-body">
-                <h5 class="card-title">${article.title}</h5>
-                <p class="card-text">${article.description}</p>
-                <a href="${article.url}" class="btn btn-primary" target="_blank">Read More</a>
-            </div>
-        </div>
-    `).join('');*/
     newsInfo.innerHTML = `
         <div class="row">
             <div class="col-md-4" id="column1"></div>
@@ -39,6 +28,9 @@ function displayNewsData(data) {
     const column3 = document.getElementById('column3');
 
     data.forEach((article, index) => {
+        if (!article.imageUrl) {
+            return;
+        }
         const newsCard = `
             <div class="card mb-3">
                 <img src="${article.imageUrl}" class="card-img-top" alt="${article.title}">
