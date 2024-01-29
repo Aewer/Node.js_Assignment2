@@ -4,6 +4,7 @@ const app = express();
 const PORT = 3000;
 
 const OPENWEATHERMAP_API_KEY = 'be087a09b46822e7a2d3e6d142f28810';
+const NEWSAPI_KEY = '741a2f0b5176445b8baf2bea0bd734b1';
 
 app.use(express.static('public'));
 
@@ -35,16 +36,43 @@ app.get('/weather', async (req, res) => {
             pressure: data.main.pressure,
             wind_speed: data.wind.speed,
             country_code: data.sys.country,
-            //rain_volume: data.rain['3h'],
         };
 
         return res.json(weatherData);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({error: 'Failed to fetch weather data'});
+        return res.status(500).json({error: 'Failed to fetch data'});
+    }
+});
+
+app.get('/news', async (req, res) => {
+    const country = "us";
+
+    const newsApiUrl = `https://newsapi.org/v2/top-headlines?country=${encodeURIComponent(country)}&apiKey=${NEWSAPI_KEY}`;
+
+    try {
+        const response = await fetch(newsApiUrl);
+        const data = await response.json();
+
+        if (data.status !== 'ok') {
+            return res.status(500).json({error: 'Failed to fetch data'});
+        }
+
+        const newsData = data.articles.map(article => ({
+            title: article.title,
+            description: article.description,
+            url: article.url,
+            imageUrl: article.urlToImage,
+            publishedAt: article.publishedAt,
+        }));
+
+        return res.json(newsData);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({error: 'Failed to fetch data'});
     }
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port:${PORT}`);
 });
