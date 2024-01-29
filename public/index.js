@@ -21,6 +21,17 @@ weatherForm.addEventListener('submit', async (event) => {
 });
 
 function displayWeatherData(data) {
+    if (data.location === undefined) {
+        weatherInfo.innerHTML = `
+        <div class="row">
+            <div class="col-md-12">
+                <h2>No such location</h2>
+            </div>
+        </div> 
+        `
+        return;
+    }
+
     weatherInfo.innerHTML = `
         <div class="row">
             <div class="col-md-6">
