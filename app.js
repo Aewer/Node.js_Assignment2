@@ -8,7 +8,7 @@ const OPENWEATHERMAP_API_KEY = 'be087a09b46822e7a2d3e6d142f28810';
 app.use(express.static('public'));
 
 app.get('/weather', async (req, res) => {
-    const { location } = req.query;
+    const {location} = req.query;
 
     if (!location) {
         return res.status(400);
@@ -41,7 +41,7 @@ app.get('/weather', async (req, res) => {
         return res.json(weatherData);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: 'Failed to fetch weather data' });
+        return res.status(500).json({error: 'Failed to fetch weather data'});
     }
 });
 
